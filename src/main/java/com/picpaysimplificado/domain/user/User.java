@@ -40,6 +40,7 @@ public class User {
         this.lastName = userDTO.lastName();
         this.balance = userDTO.balance();
         this.userType = userDTO.userType();
+        this.document = userDTO.document();
         this.email = userDTO.email();
         this.password = userDTO.password();
     }
