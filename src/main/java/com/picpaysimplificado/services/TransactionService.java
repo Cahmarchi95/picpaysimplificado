@@ -26,7 +26,10 @@ public class TransactionService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void createTransaction(TransactionDTO transactionDTO) throws Exception {
+    @Autowired
+    private NotificationService notificationService;
+
+    public Transaction createTransaction(TransactionDTO transactionDTO) throws Exception {
         User sender = this.userService.findUserById(transactionDTO.senderId());
         User reciever = this.userService.findUserById(transactionDTO.recieverId());
 
@@ -50,6 +53,10 @@ public class TransactionService {
         this.transactionRepository.save(newTransaction);
         this.userService.saveUser(sender);
         this.userService.saveUser(reciever);
+        this.notificationService.sendNotification(sender,"Transação realizada com sucesso!");
+        this.notificationService.sendNotification(reciever,"Transação recebida com sucesso!");
+
+        return newTransaction;
     }
 
 
